@@ -17,7 +17,10 @@
   </head>
   <body>
     <div >Data</div>
-    <img src="./image.jpg" id="img" onclick="changeImage()"/>
+    <!-- <img src="./image.jpg" id="img" onclick="changeImage()"/> -->
+
+    <input type="file"id="file" onchange="encodeImageFileAsURL(this)" />
+    
     <div id = "result"></div>
     <ul id="messages"></ul>
     <p id = "fileUpload"></p>
@@ -31,64 +34,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/5.4.0/math.js"></script>
     <script src="./hillCipher.js"></script>    
     <script type="text/javascript">
-//         function toDataURL(url, callback) {
-//         var xhr = new XMLHttpRequest();
-//         xhr.onload = function() {
-//           var reader = new FileReader();
-//           reader.onloadend = function() {
-//             callback(reader.result);
-//           }
-//           reader.readAsDataURL(xhr.response);
-//         };
-//         xhr.open('GET', url);
-//         xhr.responseType = 'blob';
-//         xhr.send();
-// }
-
-
-
-// function changeImage()
-// {
-//   toDataURL('https://www.gravatar.com/avatar/d50c83cc0c6523b4d3f6085295c953e0', function(dataUrl) {
-//   // console.log('RESULT:', dataUrl)
-//   console.log('RESULT2:', dataUrl)
-//   var img= document.getElementById('img');
-//   var d = 'GpdHM8mcrekcJbdC3jp7nP67P!IbH? 0Q6c3K58WEou62aVwui4qL9s0?mJiGes!NtKuEBzdYCyzmmV7A-ua1GZskW0humB.R9.Z5d2LA?augUE?gG LpbNOS?6su5yvC3TdiLKJwUqGbF oQrQdH6.NGZHUldDBueorKiNS!RoQep1miYrY dl!1eCKBHf.nE.OvBEkSW0.jETMxb-jS!9?Zq92vP7rSRRxiYdwzddv7pjJKQTntDs!QNyEltWR5HMUfmyHfixtiQDEf6vdin vO?Trm2XfzopA51Ck6w.sc!?ZvIwIPXlYGyz xVMT3kY6oX8qKM2oT6J7xE!RmKS!kiW-NW8gNcj0xgSBTQUklbnpYXFdXQM4voxQDcPRwOIE4.Mz29KpB5.E-Pqv!GiDJ5rC?LmbzEUtWfDFVoJynz3R-1BiKcCOZ9Kq-RGgeFcTKeOBghqW5PFTeNbPPjWU4!QhbpkeKj6Qvd5f?anbkaDW4LUmjwHG-c.bBMg9!ZFOZ2T08t9u28kQyPr-s3fvQTU.Lw.EVz!R!DvC5-pM5Kb.Ch7DtM?9QoazZs7?cABh6 vo8XGz2AAYRYUFWgi30LwpQDm?rz3FUIj!l6VV0lM!Y eTnY.0wBmbBHddFDYVV87yqmu6 c5n6k73Tk oUbRHEibGgHqWMc4T7J2C6pq6m3W?ACHe IHoaKTCzlv8?LyPT.fbfZ4PQXxsa!!n7BQx PXApMeCRPbd9gojXbSjBJzr-xtUD8CcdgMttuB! o6YALetAauIfP tSEOLUaF?Pl3QOHZJPJ!glGAxEH1SjTj4.HhHwE2o6KgdbQMdQZBynp7uPI..TpKuJtf?EqSfq4SRSA38gp2eNXIushVgHOVEG4j2V01F-htLPpke!QXt5p4z3E?.phJeMYu-NV5E20?wGLrPLff3UxsWs?7U-e-FUOaydhhawXxQG.pIbLYi8wv70cOu0J1Tk3.HP4x!S.8dplg8n  BwtVP!GXIXJis6nPqDmXNnj1!iVHmZh9tuGlyeuZQD FSD2JI40Mp5z -JKOnbvy7b5?g1Yh jUrqryj?H9J3Ky13c 91cE?!rIoND AmLiQU91!LstiuO5N0lX GkWQsp2aBbVMW8gBlfzFYr6dOKospvIIZkwZ4uve xCgNpgiTT.x7CNHehzTT7AKGlMP1l94OVev7??-GsE58V6MVKmH7q9?nKRC5MQEdpa2HUh3WFgj-zJAPCE5KKH?37YREq3M69IGhJbf8CzEXoeqg!JLcmgMEunVBOlJd0SguOQWhBAth847L9YMJdblbTwxJKf0Bxahvo-q6u9Lo0QPTDSuxc3VE!xn-awvBkIXpN99CBT8Oma-X.85Py7rLv2uRMRj!8cdNA9cxYGMrqd!1Uyx1D!R2YWRzZB sW..PPfxi0uxDnZYuNK3yz93QwTh6rvAEUoYI5Qd1na3.fcF U eKdkIV4SNnvFVoBNb5qzde6AuolDo cDc6t0Xk4vy1RkECh2aoVcI75wwSFB2i2t5yN0-wmWYfNPuL7qIH2R!ZeLynsBzzhvwep-ThqDsk9smGI8?piERf BSyFEVT9PYhbZQW93-jq.VSJmj.QfwawFqCEgGjQXXxalykaU oqUV47tBcg3vIX5jlT6kYtdHm-hBb3J65hG.6s39I4N3SwPg?jT!.HgC5v.tdrmYQmePKIXTYzBbjvSjHeuvqSujgA0ON6oFFUkpqGr?Dsa3Ox?F!ixXd.rbDuzOHorEmRMh4m1xXW3tHHz5fkLLc90m!MkrkU6lftak6AqnD6hQPkkPe1RXNu13qHe7E7pINK RWwRwSApibYDuMR1HWDiqgbuqmVdJlKK5F7MiXwm?h?j08rgvD?jqP9l8Y6aRAtnTX6tzHTThAtjY6iY.0GwApnEK JCGSsvDNvsOGkwoFCSHLkgQd6d-iVHpFevSZ?lnW!VU64FcX!evzjBU.bT5fvDVSDt-57YNuH RhHTH.zgy LOMulHl6rr0B3aQfZ8 d9u0G?rBBBZPwnXvd6 ZqsCZjvno.g6R.xDI tJ.mxqkOxTy7Tc?UyySlwbQ?rtN88nRnNN6oBnJ ngSmRqRm3MdJB6G3RcoLV7TX.H9yfuA1b1nD3NiwbhidAkFu?AdXJ7Tnq5VV nfF5x76RHmcfwZ0Qfa6B0z.9hvNSJoZ 6jFeGaA3n9T1vr0MozlAsLEkPa9oQEZ0gatozrnGxMau3kgw?dWeqj.eDj21UB3sK14pjsRRdWt?n7-kE3KnD8UKq6Z1PmUH5yT3L9zWMGIW3RHNTzA1K9nZjZTjg?R6pLyShSSylNk8eGVwH!dEx.4lbCFVxDUae.HyMqLb2j-03JXrE2zi?1vyC2FFxHn5h0XFkKixCplesuXCS5! ?07FY2lA2V-wgbRpG c?JDNXk7-tcjaT7lnbyh-LpZhcn1w2P67uX MQoaEPTLUo3cEZFlGLSSpy6btBt4 lSkv0xS2r.gwsQJ8vjQyLpt3WJN53v8yiz95QgTAb8nvu0f.xbnTOA5LF?uWdPTOBfxEVnscnYIY.-5T50-7G Hc4sFxi5SiLSUM-7yUeKJHb23YYKPnOkiCJr. 9nUI-5NCu-xyhv3i05tBVkLOehZTcCgWxNasti2IL0OTQpZB35pokgBnCxgd4cu2PWpywWkNvOo?pL0a29vAPiOwJrrGmlUWNf-Ctx0UnpaK4Y4Sb!Ae7XsP8YUJi.f o!bLBjog1EeYZb068VHvulETKZdiQEMiKtKwk2ePQGOjSK!zp1wp6T3-ce5gJkkdTIGhsMMgS?G4Aucl7Bg0Wc6Y3yB8TbKmWaaYvem5GwmU1rml8K37AlfdgAAfSAIJR02AYnwqEcdLx0abOwDOnVWojJ-IqxGmnr5t-hZ12ZcB XaXe!tCLBNHh1.4M9HI3wC8Deh-KuN155w2eRa!?zoCvjjs-tcsDV3 5I2nvf1?4KFYvRCiI1?3T?7NzCE6CgmN8UKHg6h8tHNDqoxuvF57igG13.a2XRSCDXafjqZxhJBdwiyoL5BQJO.1TX7neXbNEO7YOOPhhfjj!tLPBP8DryBzD!EAgyg0P5VmfQC2VSQGK4FQywHU8qok.2fhc6Bx7scuH3h9xxMYq8FD5S!yHnnq0fGd7aDGkEQ-?Tx5mSOz!RK1AA6M.8ZfADS19zdvxxN2YIMHYpvULgNboFOnXQaQd!7QiwVHTYn3eb-8B4fTOYXY6b39Qc0Zx0hzwq6h.IbEHJYWWX8LYNJwwrs916QmjCvjr?n2xDvBOo1amEeNIp9VsZgOWiZq3wbIaoWpHIWE7zL-FuEkq8-iXrRDXmv!Ko1XVLpnzzJh';
-  
-//     img.src ='data:image/jpeg;base64,'+d;
-    
-//     console.log("hiiiiiii"+dataUrl);
-
-//   });
-  
-// }    
-    // function toDataURL(src,callback)  {   
-    //     var img = new Image(); 
-    //     img.crossOrigin = 'Anonymous';
-    //     img.onload() = function(){
-    //       var canvas = document.createElement("canvas");
-    //       var ctx = canvas.getContext("2d"); 
-    //       canvas.width = this.naturalHeight; 
-    //       canvas.height = this.naturalWidth; 
-    //       ctx.drawImage(this,0,0);
-    //       var dataURL = canvas.toDataURL("image/jpeg");
-    //       callback(dataURL);
-    //     }
-    //      img.src = src;
-    //      toDataURL('https://ar.gravatar.com/avatar',function(callback){
-    //      document.getElementById('result').innerHTML = "hi";
-
-    //    });
-    //   } 
-   
-
-
+      
     </script>
     <script>
  
+var dataimg="";
+function encodeImageFileAsURL(element) {
+          var file = element.files[0];
+          var reader = new FileReader();
+          reader.onloadend = function() {
+            dataimg= reader.result;
+            console.log('RESULT', reader.result)
+          }
+          reader.readAsDataURL(file);
+        }
 
       $(function () {
 
+        
         var socket = io();
           socket.emit('connection',key2._data);
           socket.on('key',function(key){
@@ -102,23 +65,45 @@
                   console.log(`key comes back${ math.matrix(key)}`);
 
           });
-        $('form').submit(function(){
+        $('form').submit(function(e){
+        e.preventDefault();
+        if($('#m').val()){
           // var key = generateKeyPair();
+          console.log("before encr")
           var encryptTextMsg = (code(recievedKey, $('#m').val()));
+          if(dataimg){
+            var encryptImgMsg = (code(recievedKey, dataimg));
+          }else{
+            var encryptImgMsg ="";
+          }
+
           var msg={
             encryptTextMsg,
+            encryptImgMsg,
             username:$('#username').val()
+            
           };
-          console.log("Encrypted Text Msg: "+encryptTextMsg);
+          // console.log("Encrypted Text Msg: "+encryptTextMsg);
           socket.emit('chat message', msg);
+
           $('#m').val('');
+          dataimg = "";
+          document.getElementById("file").value = "";
+
+
           return false;
+        }
         });
     
         socket.on('chat message', function(msg){
            var enMsg = msg.encryptTextMsg;
+           
+           if(msg.encryptImgMsg){
+            var decryptImgMsg = code(createDecodingKey(recievedKey), msg.encryptImgMsg);
+            $('#messages').append($('<img>').attr("src",decryptImgMsg));
+           }
            var decryptTextMsg = code(createDecodingKey(recievedKey), enMsg);
-           console.log("Encrypted Text Msg : "+enMsg+"\n"+"Decrypted Text Msg : "+decryptTextMsg);
+          //  console.log("Encrypted Text Msg : "+enMsg+"\n"+"Decrypted Text Msg : "+decryptTextMsg);
           $('#messages').append($('<li>').text(msg.username+':'+decryptTextMsg));
           window.scrollTo(0, document.body.scrollHeight);
         });

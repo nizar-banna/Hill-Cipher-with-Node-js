@@ -7,8 +7,8 @@ const decodingDict = [
      "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
      "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
     "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-    ".", "?", " ",
-    "!", "-"
+    ".", "?", " ", ":", ";" ,"+",",",
+    "!", "-","/"
 ];
 var encodingDict={};
 
@@ -118,25 +118,36 @@ function code(key, text) {
     var block = math.size(key)._data[0];
     console.log("block"+block);    
     //filter text for anything that can be coded
-    text = text.match(/[A-Z .?a-z0-9!-]/gi);
+    text = text.match(/[A-Z .?a-z0-9!/:;+,-]/gi);
     console.log("After lower"+text);
     //padding, if required
     text = math.mod(text.length, block) == 0 ? text : pad(text, text.length + block - math.mod(text.length, block), " ");
     console.log("after padding:"+text);
     //chunking
+
+    
     text = math.matrix(math.reshape(text, [block, text.length / block]));
-    console.log("reshape"+text);
+    
+
+
+    // console.log("reshape"+text);
     
     //converting text to numbers
+    var v=001;
     var codedText = math.map(text, function(val) {
         return encodingDict[val];
     });
+        console.log("codedNo",codedText);
 
     //encoding
+  
     codedText = math.chain(key).multiply(codedText).mod(modulo).map(function(val) {
+        console.log("val"+val);
         return decodingDict[val];
     }).done();
-
+    
+    console.log("codedText",codedText);
+    
     //turning back into string
     codedText = math.flatten(codedText).toArray().join("").trim();
 
