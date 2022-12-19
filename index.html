@@ -1,89 +1,122 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Socket.IO chat</title>
-    <link rel="styleSheet"  href="/styles.css">
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
-      #messages { margin-bottom: 40px }
-    </style>
-  </head>
-  <body>
-    <div >Data</div>
-    <!-- <img src="./image.jpg" id="img" onclick="changeImage()"/> -->
 
-    <input type="file"id="file" onchange="encodeImageFileAsURL(this)" />
-    
-    <div id = "result"></div>
-    <ul id="messages"></ul>
-    <p id = "fileUpload"></p>
-    <input type="text" id="username">
+<head>
+  <title>Socket.IO chat</title>
+  <link rel="styleSheet" href="/styles.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/5.4.0/math.js"></script>
-    <script src="./hillCipher.js"></script>    
-    <script type="text/javascript">
-      
-    </script>
-    <script>
- 
-var dataimg="";
-function encodeImageFileAsURL(element) {
-          var file = element.files[0];
-          var reader = new FileReader();
-          reader.onloadend = function() {
-            dataimg= reader.result;
-            console.log('RESULT', reader.result)
-          }
-          reader.readAsDataURL(file);
-        }
+    body {
+      font: 13px Helvetica, Arial;
+    }
 
-      $(function () {
+    form {
+      background: #000;
+      padding: 3px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
 
-        
-        var socket = io();
-          socket.emit('connection',key2._data);
-          socket.on('key',function(key){
-                // var array = $.map(key, function(value, index) {
-                //     return [value];
-                // });
-                var x = typeof(key);
-                console.log(`x is ${x}`);
-                recievedKey = math.matrix(key);
-                  // console.log(`key comes back${Object.getOwnPropertyNames(key) }`);
-                  console.log(`key comes back${ math.matrix(key)}`);
+    form input {
+      border: 0;
+      padding: 10px;
+      width: 90%;
+      margin-right: .5%;
+    }
 
-          });
-        $('form').submit(function(e){
+    form button {
+      width: 9%;
+      background: rgb(130, 224, 255);
+      border: none;
+      padding: 10px;
+    }
+
+    #messages {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #messages li {
+      padding: 5px 10px;
+    }
+
+    #messages li:nth-child(odd) {
+      background: #eee;
+    }
+
+    #messages {
+      margin-bottom: 40px
+    }
+  </style>
+</head>
+
+<body>
+  <input type="file" id="file" onchange="encodeImageFileAsURL(this)" />
+
+  <div id="result"></div>
+  <ul id="messages"></ul>
+  <p id="fileUpload"></p>
+  <input type="text" id="username">
+
+  <form action="">
+    <input id="m" autocomplete="off" /><button>Send</button>
+  </form>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/5.4.0/math.js"></script>
+  <script src="./hillCipher.js"></script>
+  <script type="text/javascript">
+
+  </script>
+  <script>
+
+    var dataimg = "";
+    function encodeImageFileAsURL(element) {
+      var file = element.files[0];
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        dataimg = reader.result;
+        console.log('RESULT', reader.result)
+      }
+      reader.readAsDataURL(file);
+    }
+
+    $(function () {
+
+
+      var socket = io();
+      socket.emit('connection', key2._data);
+      socket.on('key', function (key) {
+        var x = typeof (key);
+        console.log(`x is ${x}`);
+        recievedKey = math.matrix(key);
+        console.log(`key comes back${math.matrix(key)}`);
+
+      });
+      $('form').submit(function (e) {
         e.preventDefault();
-        if($('#m').val()){
-          // var key = generateKeyPair();
+        if ($('#m').val()) {
           console.log("before encr")
           var encryptTextMsg = (code(recievedKey, $('#m').val()));
-          if(dataimg){
+          if (dataimg) {
             var encryptImgMsg = (code(recievedKey, dataimg));
-          }else{
-            var encryptImgMsg ="";
+          } else {
+            var encryptImgMsg = "";
           }
 
-          var msg={
+          var msg = {
             encryptTextMsg,
             encryptImgMsg,
-            username:$('#username').val()
-            
+            username: $('#username').val()
+
           };
-          // console.log("Encrypted Text Msg: "+encryptTextMsg);
           socket.emit('chat message', msg);
 
           $('#m').val('');
@@ -93,34 +126,23 @@ function encodeImageFileAsURL(element) {
 
           return false;
         }
-        });
-    
-        socket.on('chat message', function(msg){
-           var enMsg = msg.encryptTextMsg;
-           
-           if(msg.encryptImgMsg){
-            var decryptImgMsg = code(createDecodingKey(recievedKey), msg.encryptImgMsg);
-            $('#messages').append($('<img>').attr("src",decryptImgMsg));
-           }
-           var decryptTextMsg = code(createDecodingKey(recievedKey), enMsg);
-          //  console.log("Encrypted Text Msg : "+enMsg+"\n"+"Decrypted Text Msg : "+decryptTextMsg);
-          $('#messages').append($('<li>').text(msg.username+':'+decryptTextMsg));
-          window.scrollTo(0, document.body.scrollHeight);
-        });
-
-        // socket.on('key', function(msg){
-        //  alert(msg);
-        // });
       });
 
-      // File.prototype.convertToBase64 = function(callback){
+      socket.on('chat message', function (msg) {
+        var enMsg = msg.encryptTextMsg;
 
-      //     var FR= new FileReader();
-      //     FR.onload = function(e) {
-      //         callback(e.target.result)
-      //     };       
-      //     FR.readAsDataURL(this);
-      // }
-    </script>  
-  </body>
+        if (msg.encryptImgMsg) {
+          var decryptImgMsg = code(createDecodingKey(recievedKey), msg.encryptImgMsg);
+          $('#messages').append($('<img>').attr("src", decryptImgMsg));
+        }
+        var decryptTextMsg = code(createDecodingKey(recievedKey), enMsg);
+        $('#messages').append($('<li>').text(msg.username + ':' + decryptTextMsg));
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+
+
+    });
+  </script>
+</body>
+
 </html>
